@@ -3,11 +3,13 @@ package com.azyabon.weatherapp.network.repository
 import android.annotation.SuppressLint
 import android.location.Geocoder
 import com.azyabon.weatherapp.data.CurrentLocation
+import com.azyabon.weatherapp.data.RemoteLocation
+import com.azyabon.weatherapp.network.api.WeatherAPI
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 
-class WeatherDataRepository {
+class WeatherDataRepository(private val weatherApi: WeatherAPI) {
 
     @SuppressLint("MissingPermission")
     fun getCurrentLocation(
@@ -48,5 +50,11 @@ class WeatherDataRepository {
                 location = addressText.toString(),
             )
         } ?: currentLocation
+    }
+
+    suspend fun searchLocation(query: String): List<RemoteLocation>? {
+        val response = weatherApi.searchLocation(query = query)
+
+        return if (response.isSuccessful) response.body() else null
     }
 }

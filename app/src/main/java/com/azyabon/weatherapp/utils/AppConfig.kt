@@ -1,6 +1,7 @@
 package com.azyabon.weatherapp.utils
 
 import android.app.Application
+import com.azyabon.weatherapp.dependency_injection.networkModule
 import com.azyabon.weatherapp.dependency_injection.repositoryModule
 import com.azyabon.weatherapp.dependency_injection.serializerModule
 import com.azyabon.weatherapp.dependency_injection.storageModule
@@ -21,6 +22,7 @@ class AppConfig : Application() {
                     viewModelModule,
                     serializerModule,
                     storageModule,
+                    networkModule,
                 )
             )
         }
