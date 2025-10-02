@@ -1,6 +1,7 @@
 package com.azyabon.weatherapp.network.api
 
 import com.azyabon.weatherapp.data.RemoteLocation
+import com.azyabon.weatherapp.data.RemoteWeatherData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,6 +15,12 @@ interface WeatherAPI {
     @GET("search.json")
     suspend fun searchLocation(
         @Query("key") key: String = API_KEY,
-        @Query("q") query: String
+        @Query("q") query: String,
     ): Response<List<RemoteLocation>>
+
+    @GET("forecast.json")
+    suspend fun getWeatherData(
+        @Query("key") key: String = API_KEY,
+        @Query("q") query: String,
+    ): Response<RemoteWeatherData>
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.location.Geocoder
 import com.azyabon.weatherapp.data.CurrentLocation
 import com.azyabon.weatherapp.data.RemoteLocation
+import com.azyabon.weatherapp.data.RemoteWeatherData
 import com.azyabon.weatherapp.network.api.WeatherAPI
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -54,6 +55,12 @@ class WeatherDataRepository(private val weatherApi: WeatherAPI) {
 
     suspend fun searchLocation(query: String): List<RemoteLocation>? {
         val response = weatherApi.searchLocation(query = query)
+
+        return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun getWeatherData(latitude: Double, longitude: Double): RemoteWeatherData? {
+        val response = weatherApi.getWeatherData(query = "$latitude,$longitude")
 
         return if (response.isSuccessful) response.body() else null
     }
